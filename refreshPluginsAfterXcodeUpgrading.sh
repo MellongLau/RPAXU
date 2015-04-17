@@ -7,9 +7,10 @@ for MyPlugin in ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/*
 do
     UUIDs=$(defaults read "$MyPlugin"/Contents/Info DVTPlugInCompatibilityUUIDs)
     if echo "${UUIDs[@]}" | grep -w "$UUID" &>/dev/null; then
-        echo UUIDs has contain the Xcode UUID
+        echo "UUIDs has contained the Xcode's UUID"
     else
         defaults write "$MyPlugin"/Contents/Info DVTPlugInCompatibilityUUIDs -array-add $UUID
         echo write DVTPlugInCompatibilityUUID to $MyPlugin succeed!
     fi
 done
+echo "Done!"
