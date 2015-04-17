@@ -5,6 +5,11 @@ echo Xcode DVTPlugInCompatibilityUUID is $UUID
 #遍历每一个Xcode插件，将UUID写入插件的兼容列表中
 for MyPlugin in ~/Library/Application\ Support/Developer/Shared/Xcode/Plug-ins/*
 do
-	defaults write "$MyPlugin"/Contents/Info DVTPlugInCompatibilityUUIDs -array-add $UUID
-	echo write DVTPlugInCompatibilityUUID to $MyPlugin succeed!
+    UUIDs=$(defaults read "$MyPlugin"/Contents/Info DVTPlugInCompatibilityUUIDs)
+    if echo "${UUIDs[@]}" | grep -w "$UUID" &>/dev/null; then
+        echo UUIDs has contain the Xcode UUID
+    else
+        defaults write "$MyPlugin"/Contents/Info DVTPlugInCompatibilityUUIDs -array-add $UUID
+        echo write DVTPlugInCompatibilityUUID to $MyPlugin succeed!
+    fi
 done
